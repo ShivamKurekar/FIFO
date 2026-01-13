@@ -17,15 +17,18 @@ module sync_fifo #(parameter DATA_WIDTH = 64,
     // input i_rd_clk,
     input i_rd_en,
     
-    output [DATA_WIDTH-1: 0] o_rd_data,
+    output reg [DATA_WIDTH-1: 0] o_rd_data,
     output o_empty,
     output [$clog2(DEPTH): 0] rd_data_count
 );
 
-    reg [DATA_WIDTH - 1 :0] mem [0: (DEPTH-1)];
-    reg [$clog2(DEPTH)-1 :0] wr_ptr, nxt_wr_ptr;
-    reg [$clog2(DEPTH)-1 :0] rd_ptr, nxt_rd_ptr;
+    reg [(DATA_WIDTH - 1) :0] ram [0: (DEPTH-1)];
+    reg [$clog2(DEPTH)-1 :0] wr_ptr = 0, nxt_wr_ptr;
+    reg [$clog2(DEPTH)-1 :0] rd_ptr = 0, nxt_rd_ptr;
     reg [$clog2(DEPTH) :0] count;
+
+    /*for debug*/
+    reg[1:0] state = 0;
 
     always @(posedge i_wr_clk or negedge i_rstn) begin
         if(!i_rstn) begin
@@ -37,24 +40,25 @@ module sync_fifo #(parameter DATA_WIDTH = 64,
 
         else begin
     
+            state <= {(i_wr_en && !o_full), (i_rd_en && !o_empty)};
             case ({(i_wr_en && !o_full), (i_rd_en && !o_empty)})
                 //for wr
-                10: begin
-                    mem[wr_ptr] <= i_wr_data;
+                2'b10: begin
+                    ram[wr_ptr] <= i_wr_data;
                     wr_ptr <= nxt_wr_ptr;
                     count <= count + 1;
                 end
                 //for rd
-                01: begin
-                    o_rd_data <= mem[rd_ptr];
+                2'b01: begin
+                    o_rd_data <= ram[rd_ptr];
                     rd_ptr <= nxt_rd_ptr;
                     count <= count - 1;
                     
                 end
 
-                11: begin
-                    mem[wr_ptr] <= i_wr_data;
-                    o_rd_data <= mem[rd_ptr];
+                2'b11: begin
+                    ram[wr_ptr] <= i_wr_data;
+                    o_rd_data <= ram[rd_ptr];
                     wr_ptr <= nxt_wr_ptr;
                     rd_ptr <= nxt_rd_ptr;
                 end
