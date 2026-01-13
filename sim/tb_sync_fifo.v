@@ -4,7 +4,7 @@ module tb_sync_fifo;
 
     // Parameters
     localparam DATA_WIDTH = 64;
-    localparam DEPTH      = 4;   // use small depth for faster simulation
+    localparam DEPTH      = 512;   // use small depth for faster simulation
 
     // DUT signals
     reg                     i_wr_clk;
