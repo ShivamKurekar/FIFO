@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<efx:project name="FIFO" description="" last_change="1768222924" sw_version="2024.2.294" last_run_state="" last_run_flow="" config_result_in_sync="true" design_ood="change" place_ood="" route_ood="" xmlns:efx="http://www.efinixinc.com/enf_proj" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.efinixinc.com/enf_proj enf_proj.xsd">
+<efx:project name="FIFO" description="" last_change="1768285485" sw_version="2024.2.294" last_run_state="fail" last_run_flow="syn" config_result_in_sync="true" design_ood="" place_ood="" route_ood="" xmlns:efx="http://www.efinixinc.com/enf_proj" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.efinixinc.com/enf_proj enf_proj.xsd">
     <efx:device_info>
         <efx:family name="Trion"/>
         <efx:device name="T120F324"/>
         <efx:timing_model name="C4"/>
     </efx:device_info>
     <efx:design_info def_veri_version="verilog_2k" def_vhdl_version="vhdl_2008" unified_flow="false">
-        <efx:top_module name="FIFO"/>
+        <efx:top_module name="sync_fifo"/>
+        <efx:design_file name="rtl/Sync/sync_fifo.v" version="default" library="default"/>
         <efx:top_vhdl_arch name=""/>
     </efx:design_info>
     <efx:constraint_info>
