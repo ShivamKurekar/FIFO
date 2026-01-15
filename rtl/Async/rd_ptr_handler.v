@@ -1,6 +1,6 @@
 // Read point Handler
 
-module rd_ptr_handler #(parameter PTR_WIDTH)(
+module rd_ptr_handler #(parameter PTR_WIDTH = 3)(
     input i_clk, i_rstn, i_en,
     input  [PTR_WIDTH : 0] i_g_wr_ptr,
     output reg [PTR_WIDTH : 0] o_b_rd_ptr, // to fifo mem

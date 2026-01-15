@@ -1,5 +1,5 @@
-module fifo_mem #(parameter DEPTH = 512,
-                parameter DATA_WIDTH = 64)(
+module fifo_mem #(parameter DEPTH = 8,
+                parameter DATA_WIDTH = 4)(
 
     /* Write clk domain */
     input i_wr_clk,
