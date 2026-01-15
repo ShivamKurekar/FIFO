@@ -11,7 +11,7 @@ module fifo_mem #(parameter DEPTH = 8,
     input  i_rd_clk,
     input i_rd_en, i_empty,
     input [$clog2(DEPTH): 0] i_b_rd_ptr,
-    output reg [(DATA_WIDTH-1): 0] o_rd_data
+    output [(DATA_WIDTH-1): 0] o_rd_data
 );
 
     /* Since pointers are passed we exclude MSB as they are for wrap bits */
@@ -26,7 +26,10 @@ module fifo_mem #(parameter DEPTH = 8,
     always @(posedge i_wr_clk)
         if(i_wr_en && !i_full) mem [WR_ADDR] <= i_wr_data;
     
+    /*
     always @(posedge i_rd_clk)
         if(i_rd_en && !i_empty) o_rd_data <= mem [RD_ADDR];
+    */
+    assign o_rd_data = mem [RD_ADDR];
 
 endmodule //memory
