@@ -1,12 +1,12 @@
-module ff_sync #(parameter DATA_WIDTH = 4)(
+module ff_sync #(parameter DATA_WIDTH = 3)(
 
     input clk, rstn,
-    input [DATA_WIDTH-1 : 0] i_data,
-    output [DATA_WIDTH-1 : 0] o_data
+    input [DATA_WIDTH: 0] i_data,
+    output [DATA_WIDTH: 0] o_data
 
 );
 
-    reg [DATA_WIDTH-1 : 0] f1, f2;
+    reg [DATA_WIDTH : 0] f1, f2;
 
     always @(posedge clk or negedge rstn) begin
 
