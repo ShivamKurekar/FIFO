@@ -25,10 +25,10 @@ module wr_ptr_handler #(parameter PTR_WIDTH)(
     end
 
     // next binary ptr calculation
-    assign nxt_b_wr_ptr = b_wr_ptr + (~o_full & i_en);
+    assign nxt_b_wr_ptr = o_b_wr_ptr + (~o_full & i_en);
     // next gray ptr calculation
     assign nxt_g_wr_ptr = nxt_b_wr_ptr ^ (nxt_b_wr_ptr >> 1);
-    
+
     // Full flag
     // Without conversion of gray to binary
     assign wr_full = (nxt_g_wr_ptr == ({~i_g_rd_ptr [PTR_WIDTH : PTR_WIDTH - 1], i_g_rd_ptr [PTR_WIDTH-2 : 0]}));
