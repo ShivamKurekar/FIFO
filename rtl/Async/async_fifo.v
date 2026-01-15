@@ -14,7 +14,7 @@ module async_fifo #(parameter DEPTH = 8,
     input i_rd_rstn,
     input i_rd_en,
     
-    output reg [DATA_WIDTH-1: 0] o_rd_data,
+    output [DATA_WIDTH-1: 0] o_rd_data,
     output o_empty
 );
 
@@ -23,7 +23,7 @@ module async_fifo #(parameter DEPTH = 8,
     wire [PTR_WIDTH: 0] g_wr_ptr, g_rd_ptr, rd_ptr, wr_ptr;
     wire [PTR_WIDTH: 0] sync_g_wr_ptr, sync_g_rd_ptr;
 
-    wr_ptr_handler wr_hand #(.PTR_WIDTH(PTR_WIDTH)) (
+    wr_ptr_handler #(.PTR_WIDTH(PTR_WIDTH)) wr_hand (
         .i_clk(i_wr_clk),
         .i_rstn(i_wr_rstn),
         .i_en(i_wr_en),
@@ -33,21 +33,21 @@ module async_fifo #(parameter DEPTH = 8,
         .o_full(o_full)
     );
 
-    ff_sync wr_ff #(.DATA_WIDTH(PTR_WIDTH)) (
+    ff_sync #(.DATA_WIDTH(PTR_WIDTH)) wr_ff (
         .clk(i_wr_clk),
         .rstn(i_wr_rstn),
         .i_data(g_rd_ptr),
         .o_data(sync_g_rd_ptr)
     );
     
-    ff_sync rd_ff #(.DATA_WIDTH(PTR_WIDTH)) (
+    ff_sync #(.DATA_WIDTH(PTR_WIDTH)) rd_ff (
         .clk(i_rd_clk),
         .rstn(i_rd_rstn),
         .i_data(g_wr_ptr),
         .o_data(sync_g_wr_ptr)
     );
 
-    rd_ptr_handler rd_hand #(.PTR_WIDTH(PTR_WIDTH))(
+    rd_ptr_handler #(.PTR_WIDTH(PTR_WIDTH)) rd_hand (
         .i_clk(i_rd_clk),
         .i_rstn(i_rd_rstn),
         .i_en(i_rd_en),
@@ -57,8 +57,8 @@ module async_fifo #(parameter DEPTH = 8,
         .o_empty(o_empty)
     );
 
-    fifo_mem memory #(.DEPTH(DEPTH),
-                .DATA_WIDTH(DATA_WIDTH))(
+    fifo_mem #(.DEPTH(DEPTH),
+                .DATA_WIDTH(DATA_WIDTH)) memory (
         .i_wr_clk(i_wr_clk),
         .i_wr_en(i_wr_en),
         .i_full(o_full),
