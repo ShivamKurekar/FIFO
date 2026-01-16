@@ -53,3 +53,5 @@ bin/
 
 debian/files
 debian/*substvars
+sim/async_fifo
+sim/async_fifo2
